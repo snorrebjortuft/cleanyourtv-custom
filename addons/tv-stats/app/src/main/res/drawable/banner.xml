@@ -1,0 +1,11 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="320dp" android:height="180dp" android:viewportWidth="320" android:viewportHeight="180">
+    <path android:fillColor="#14202B" android:pathData="M0,0h320v180h-320z" />
+    <!-- a TV: frame, screen, stand -->
+    <path android:fillColor="#2B3A48" android:pathData="M84,28h152a10,10 0 0,1 10,10v88a10,10 0 0,1 -10,10h-152a10,10 0 0,1 -10,-10v-88a10,10 0 0,1 10,-10z" />
+    <path android:fillColor="#0B1218" android:pathData="M88,36h144v86h-144z" />
+    <path android:fillColor="#2B3A48" android:pathData="M146,136h28v12h-28z M118,148h84a4,4 0 0,1 4,4v2h-92v-2a4,4 0 0,1 4,-4z" />
+    <!-- stats on the screen -->
+    <path android:fillColor="#5AA9E6" android:pathData="M104,110h16v-22h-16z M128,110h16v-40h-16z M152,110h16v-30h-16z M176,110h16v-52h-16z M200,110h16v-36h-16z" />
+    <path android:strokeColor="#FFC93C" android:strokeWidth="4" android:strokeLineCap="round" android:strokeLineJoin="round"
+        android:pathData="M100,84 L128,62 L160,74 L186,48 L220,58" />
+</vector>

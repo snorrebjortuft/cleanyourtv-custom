@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TV-statistikk</string>
+    <string name="now">Akkurat nå</string>
+    <string name="cpu">Prosessor</string>
+    <string name="memory">Minne</string>
+    <string name="storage">Lagring</string>
+    <string name="uptime">Oppetid</string>
+    <string name="watch">Seertid</string>
+    <string name="today">I dag</string>
+    <string name="week">Siste 7 dager</string>
+    <string name="month">Siste 30 dager</string>
+    <string name="top">Mest sett</string>
+    <string name="total">Totalt %1$s</string>
+    <string name="no_usage">Seertid er ikke slått på ennå.</string>
+    <string name="no_shows">Ingen programmer logget ennå. Det som spilles fra nå av, telles her.</string>
+    <string name="nothing">Ingenting sett i denne perioden.</string>
+    <string name="unknown">–</string>
+    <string name="cpu_hidden">TV-en skjuler dette for apper</string>
+</resources>
