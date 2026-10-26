@@ -20,6 +20,11 @@
     <string name="cant_open">Kan ikke åpne %1$s</string>
     <string name="date_format">EEEE d. MMMM</string>
     <string name="stats_cpu">Prosessor %1$d%%</string>
+    <string name="countdown_days">%1$d dager til %2$s</string>
+    <string name="countdown_one_day">1 dag til %1$s</string>
+    <string name="countdown_today">I dag: %1$s</string>
+    <string name="now_playing">Spilles nå</string>
+    <string name="now_paused">Satt på pause</string>
     <string name="stats_memory">Minne: %1$d / %2$d MB</string>
     <string name="stats_storage">Lagring: %1$s ledig</string>
     <string name="dream_name">Klokke</string>

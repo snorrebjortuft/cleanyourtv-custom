@@ -372,6 +372,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         public void run() {
             updateGreeting();
             updateRace();
+            updateCountdown();
             // The pill follows the network callbacks and each return to Home; only the diya's flame follows the
             // signal level, so only it needs this minute's binder calls (about 7 ms on the UI thread).
             if (festive) updateWifiLabel();
@@ -495,6 +496,51 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         raceHeadline = findViewById(R.id.raceHeadline);
         raceSessions = findViewById(R.id.raceSessions);
         showStats = cfg.showStats;
+        countdown = findViewById(R.id.countdown);
+        countdownDay = parseCountdownDate(cfg.countdownDate);
+        if (countdownDay != null) {
+            countdownLabel = cfg.countdownLabel.isEmpty()
+                    ? countdownDay.format(java.time.format.DateTimeFormatter.ofPattern("d MMMM", Locale.getDefault()))
+                    : cfg.countdownLabel;
+            countdownParty = cfg.countdownParty;
+            if (showStats) {
+                android.widget.RelativeLayout.LayoutParams lp = (android.widget.RelativeLayout.LayoutParams) countdown.getLayoutParams();
+                lp.addRule(android.widget.RelativeLayout.BELOW, R.id.stats);
+                countdown.setLayoutParams(lp);
+            }
+            countdown.setVisibility(View.VISIBLE);
+            updateCountdown();
+        }
+        if (cfg.nowPlaying) {
+            // Under the top-right buttons, over the wallpaper; outside the header so the layout does not move.
+            float d = getResources().getDisplayMetrics().density;
+            nowPlayingCard = new NowPlayingCard(this);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, android.view.Gravity.TOP | android.view.Gravity.END);
+            lp.topMargin = (int) (120 * d);
+            lp.setMarginEnd((int) (56 * d));
+            root.addView(nowPlayingCard, lp);
+            // Up returns to the top-bar button Down came from, Down goes to the dock; Left and Right stay put.
+            nowPlayingCard.setOnKeyListener((v, keyCode, event) -> {
+                if (event.getAction() != KeyEvent.ACTION_DOWN) return false;
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_DPAD_UP:
+                        View back = nowPlayingFrom != null && nowPlayingFrom.getVisibility() == View.VISIBLE
+                                ? nowPlayingFrom : findViewById(R.id.btnSettings);
+                        back.requestFocus();
+                        return true;
+                    case KeyEvent.KEYCODE_DPAD_DOWN:
+                        focusTile(singleRow ? lastFocused : lastFocused % COLUMNS);
+                        return true;
+                    case KeyEvent.KEYCODE_DPAD_LEFT:
+                    case KeyEvent.KEYCODE_DPAD_RIGHT:
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            nowPlayingCard.setOnHiddenWhileFocused(() -> focusTile(singleRow ? lastFocused : lastFocused % COLUMNS));
+        }
         shamsi = cfg.shamsiDate;
         lunarDate = findViewById(R.id.lunarDate);
         lunar = cfg.lunarDate;
@@ -782,6 +828,12 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             if (event.getAction() != KeyEvent.ACTION_DOWN) return false;
             if (keyCode == KeyEvent.KEYCODE_DPAD_UP) return true;
             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+                // now_playing: the card under the bar comes first while it shows.
+                if (nowPlayingCard != null && nowPlayingCard.getVisibility() == View.VISIBLE) {
+                    nowPlayingFrom = v;
+                    nowPlayingCard.requestFocus();
+                    return true;
+                }
                 // Back to the dock tile Up came from, not wherever the focus finder lands.
                 focusTile(singleRow ? lastFocused : lastFocused % COLUMNS);
                 return true;
@@ -983,6 +1035,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             pillsShown = true;
         }
         if (showStats) startStats();
+        updateCountdown();
+        if (nowPlayingCard != null) nowPlayingCard.resume();
         sky.update();
         wallpaperPlayer.start();
         handler.postDelayed(minuteTick, MINUTE_MS);
@@ -1160,6 +1214,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         heroArt.animate().cancel();
         handler.removeCallbacks(minuteTick);
         stopStats();
+        if (nowPlayingCard != null) nowPlayingCard.pause();
         if (diya != null) diya.stop();
         cancelPendingFocusScroll();
         // Nothing of ours stays on screen over another app; an undecided prompt simply returns next time.
@@ -2042,6 +2097,61 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         glass.animate().cancel();
         if (animations && !reducedMotion) glass.animate().alpha(0f).setDuration(160).start();
         else glass.setAlpha(0f);
+    }
+
+    // ---- optional countdown under the clock (config.xml countdown_date) -----------------------------
+
+    private TextView countdown;
+    /** now_playing: the album-art card under the top-right buttons; null when off. */
+    private NowPlayingCard nowPlayingCard;
+    /** The top-bar button Down left for the now-playing card, so Up goes back to it. */
+    private View nowPlayingFrom;
+    /** countdown_date, or null when it is unset or not MM-DD: then the line stays gone. */
+    private java.time.MonthDay countdownDay;
+    /** countdown_label, or the date itself ("20 November") when the label is empty. */
+    private String countdownLabel = "";
+    /** countdown_party: the text shown over confetti and hearts on the day; empty is no party. */
+    private String countdownParty = "";
+    private static LocalDate lastParty;
+
+    private void playParty() {
+        if (isFinishing() || isDestroyed()) return;
+        PartyView party = new PartyView(this);
+        root.addView(party, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        party.play(countdownParty, 9000, () -> root.removeView(party));
+    }
+
+    static java.time.MonthDay parseCountdownDate(String mmdd) {
+        if (mmdd == null || mmdd.isEmpty()) return null;
+        try {
+            return java.time.MonthDay.parse("--" + mmdd);
+        } catch (java.time.format.DateTimeParseException e) {
+            return null;
+        }
+    }
+
+    /** Days from today to the day, 0 on the day itself; once it has passed, to the same day next year. */
+    static int daysUntil(java.time.MonthDay day, LocalDate today) {
+        LocalDate next = day.atYear(today.getYear());
+        if (next.isBefore(today)) next = day.atYear(today.getYear() + 1);
+        return (int) java.time.temporal.ChronoUnit.DAYS.between(today, next);
+    }
+
+    /** Runs on resume and every minute, so the number turns over at midnight while Home is on screen. */
+    private void updateCountdown() {
+        if (countdownDay == null || countdown == null) return;
+        LocalDate today = LocalDate.now();
+        int days = daysUntil(countdownDay, today);
+        // countdown_party: on the day itself, confetti, hearts and the text, on the first Home of that day.
+        if (days == 0 && !countdownParty.isEmpty() && !today.equals(lastParty) && !isFinishing()) {
+            lastParty = today;
+            handler.postDelayed(this::playParty, 600);
+        }
+        String text = days == 0 ? getString(R.string.countdown_today, countdownLabel)
+                : days == 1 ? getString(R.string.countdown_one_day, countdownLabel)
+                : getString(R.string.countdown_days, days, countdownLabel);
+        if (!text.contentEquals(countdown.getText())) countdown.setText(text);
     }
 
     // ---- optional system stats (config.xml show_stats) --------------------------------------------

@@ -172,6 +172,16 @@ final class Config {
     final boolean homeLongPressHome;
     /** Home at every power-on, whatever the firmware put in front: an input, Live TV or an app (power_on_home_always). */
     final boolean powerOnHomeAlways;
+    /** A yearly date as MM-DD that the line under the clock counts down to; empty is off (countdown_date). */
+    final String countdownDate;
+    /** What the countdown counts to, after "24 days to" (countdown_label). */
+    final String countdownLabel;
+    /** Text shown over confetti and hearts on the countdown day itself; empty is no party (countdown_party). */
+    final String countdownParty;
+    /** Pictures that take over the rotation on given days of the year (wallpaper_seasons; theme only). */
+    final List<WallpaperSeason> wallpaperSeasons;
+    /** The now-playing card on Home and music mode in the screensaver (now_playing). */
+    final boolean nowPlaying;
     /** The Settings button opens the quick settings panel instead of the TV's Settings (settings_key_panel). */
     final boolean settingsKeyPanel;
     /** Home puts the remote's accessibility helpers back after a force stop (restore_key_services; ServiceRepair). */
@@ -270,7 +280,7 @@ final class Config {
                    List<RaceWeekend.Race> raceCalendar, boolean cinematicHome, boolean ambientGlow, boolean appGlow, boolean fadeRows, int homeIdleClockMinutes,
                    boolean keyFilter, boolean dockGlass, String glowStyle, boolean wallpaperCaptions,
                    boolean handleViewInputs, boolean tileMenu, boolean dockEvenPadding, boolean dockBand, boolean cinematicDots, boolean cinematicWhiteFocus, boolean wifiStatusColor, int cinematicScrim, int cinematicArt,
-                   Map<String, Set<String>> wallpaperMoods, boolean gamepadPassthrough, boolean consumeVolumeKeys, boolean powerOnHome, boolean homeLongPressHome, boolean wifiStatusWarnings, List<String> topBarApps, boolean showGreeting, boolean headerWhite, boolean clockWallpaper, int clockWallpaperDim, boolean clockGlow, String glassStyle, boolean singleRow, boolean dockBandAll, boolean lunarDate, int lunarUtcOffset, boolean dateBelowClock, boolean vpnPill, String locale, boolean powerOnHomeAlways) {
+                   Map<String, Set<String>> wallpaperMoods, boolean gamepadPassthrough, boolean consumeVolumeKeys, boolean powerOnHome, boolean homeLongPressHome, boolean wifiStatusWarnings, List<String> topBarApps, boolean showGreeting, boolean headerWhite, boolean clockWallpaper, int clockWallpaperDim, boolean clockGlow, String glassStyle, boolean singleRow, boolean dockBandAll, boolean lunarDate, int lunarUtcOffset, boolean dateBelowClock, boolean vpnPill, String locale, boolean powerOnHomeAlways, String countdownDate, String countdownLabel, String countdownParty, List<WallpaperSeason> wallpaperSeasons, boolean nowPlaying) {
         this.handleViewInputs = handleViewInputs;
         this.tileMenu = tileMenu;
         this.inputKeycodes = inputKeycodes;
@@ -365,6 +375,11 @@ final class Config {
         this.powerOnHome = powerOnHome;
         this.homeLongPressHome = homeLongPressHome;
         this.powerOnHomeAlways = powerOnHomeAlways;
+        this.countdownDate = countdownDate;
+        this.countdownLabel = countdownLabel;
+        this.countdownParty = countdownParty;
+        this.wallpaperSeasons = wallpaperSeasons;
+        this.nowPlaying = nowPlaying;
         this.wifiStatusWarnings = wifiStatusWarnings;
         this.topBarApps = Collections.unmodifiableList(topBarApps);
         this.showGreeting = showGreeting;
@@ -472,6 +487,10 @@ final class Config {
         boolean powerOnHome = res.getBoolean(R.bool.power_on_home);
         boolean homeLongPressHome = res.getBoolean(R.bool.home_long_press_home);
         boolean powerOnHomeAlways = res.getBoolean(R.bool.power_on_home_always);
+        String countdownDate = res.getString(R.string.countdown_date).trim();
+        String countdownLabel = res.getString(R.string.countdown_label).trim();
+        String countdownParty = res.getString(R.string.countdown_party).trim();
+        boolean nowPlaying = res.getBoolean(R.bool.now_playing);
         boolean dockGlass = res.getBoolean(R.bool.dock_glass);
         boolean dockEvenPadding = res.getBoolean(R.bool.dock_even_padding);
         boolean dockBand = res.getBoolean(R.bool.dock_band);
@@ -576,6 +595,10 @@ final class Config {
             powerOnHome = bool(json, "power_on_home", powerOnHome);
             homeLongPressHome = bool(json, "home_long_press_home", homeLongPressHome);
             powerOnHomeAlways = bool(json, "power_on_home_always", powerOnHomeAlways);
+            countdownDate = string(json, "countdown_date", countdownDate).trim();
+            countdownLabel = string(json, "countdown_label", countdownLabel).trim();
+            countdownParty = string(json, "countdown_party", countdownParty).trim();
+            nowPlaying = bool(json, "now_playing", nowPlaying);
             dockGlass = bool(json, "dock_glass", dockGlass);
             dockEvenPadding = bool(json, "dock_even_padding", dockEvenPadding);
             dockBand = bool(json, "dock_band", dockBand);
@@ -660,7 +683,9 @@ final class Config {
                 dockBand, cinematicDots, cinematicWhiteFocus, wifiStatusColor, cinematicScrim, cinematicArt, wallpaperMoods, gamepadPassthrough,
                 consumeVolumeKeys, powerOnHome, homeLongPressHome, wifiStatusWarnings, topBarApps, showGreeting, headerWhite, clockWallpaper,
                 Math.max(0, Math.min(90, clockWallpaperDim)), clockGlow, glassStyle, singleRow && dockRow, dockBandAll, lunar, lunarOffset,
-                dateBelowClock, vpnPill, locale, powerOnHomeAlways);
+                dateBelowClock, vpnPill, locale, powerOnHomeAlways, countdownDate, countdownLabel, countdownParty,
+                json == null ? Collections.emptyList() : WallpaperSeason.parse(json.optJSONObject("wallpaper_seasons")),
+                nowPlaying);
     }
 
     /**

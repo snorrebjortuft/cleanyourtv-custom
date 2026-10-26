@@ -57,6 +57,8 @@ final class WallpaperPlayer {
     private final Map<String, String> names;
     /** wallpaper_moods: the collection's groups by time of day; empty rotates through all of it. */
     private final Map<String, Set<String>> moods;
+    /** wallpaper_seasons: pictures that take over on given days of the year (December, 17 May). */
+    private final List<WallpaperSeason> seasons;
     /** config.xml latitude and longitude for the sun's times, and today's {sunrise, sunset} once worked out. */
     private final String latitude, longitude;
     private LocalDate sunDay;
@@ -73,6 +75,7 @@ final class WallpaperPlayer {
         order = config.wallpaperOrder;
         preferences = context.getSharedPreferences("wallpaper_rotation", Context.MODE_PRIVATE);
         moods = config.wallpaperMoods;
+        seasons = config.wallpaperSeasons;
         latitude = moods.isEmpty() ? "" : context.getString(R.string.latitude);
         longitude = moods.isEmpty() ? "" : context.getString(R.string.longitude);
         // Playback state belongs to one collection. Changing the collection starts from its first
@@ -150,8 +153,11 @@ final class WallpaperPlayer {
 
     /** The pictures the rotation picks from now: wallpaper_moods' group for the time of day, or the whole collection. */
     private List<File> playable() {
-        if (moods.isEmpty()) return files;
         LocalDateTime now = LocalDateTime.now();
+        List<File> season = WallpaperSeason.active(files, seasons, java.time.MonthDay.from(now));
+        if (season != null) return season;
+        List<File> files = WallpaperSeason.outOfSeason(this.files, seasons);
+        if (moods.isEmpty()) return files;
         if (!now.toLocalDate().equals(sunDay)) {
             sunDay = now.toLocalDate();
             sun = WallpaperMood.sun(sunDay, latitude, longitude, ZoneId.systemDefault());

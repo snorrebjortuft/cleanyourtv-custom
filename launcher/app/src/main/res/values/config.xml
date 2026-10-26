@@ -404,6 +404,19 @@
     <!-- One line under the clock: CPU, free memory and free storage. Off by default; a theme can set
          "show_stats": true. Nothing is read, and the clock does not move, while this is false. -->
     <bool name="show_stats">false</bool>
+    <!-- A line under the clock counting the days to a yearly date: countdown_date as MM-DD ("12-24") and countdown_label
+         for what it is ("24 days to Christmas Eve"). Once the date has passed it counts to the same date next year.
+         An empty date turns it off. Can also be set with "countdown_date" and "countdown_label" in a theme. -->
+    <string name="countdown_date" translatable="false"></string>
+    <string name="countdown_label" translatable="false"></string>
+    <!-- On the countdown day itself, this text springs up over falling confetti and rising hearts for 9 seconds, on the
+         first Home of the day. Empty is no party. Can also be set with "countdown_party" in a theme. -->
+    <string name="countdown_party" translatable="false"></string>
+    <!-- What is playing (Spotify, YouTube Music...) as a card with album art under the top-right buttons, and as music
+         mode in the clock screensaver: the time and date beside a card with the cover, over Home's wallpaper. Needs the notification listener
+         approved once: cmd notification allow_listener com.gathin.tvhome/.MediaListener. Can also be set with
+         "now_playing" in a theme. -->
+    <bool name="now_playing">false</bool>
 
     <!-- Time-of-day backdrop behind everything: a dark gradient that follows the clock, with a warm
          horizon glow around sunrise and sunset. 0 keeps the plain background (the default); 1 to 100

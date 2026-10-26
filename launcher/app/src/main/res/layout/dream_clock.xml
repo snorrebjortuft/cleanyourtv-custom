@@ -49,13 +49,14 @@
                 android:textAllCaps="true" />
         </LinearLayout>
 
-        <TextClock
+        <!-- The date, written by ClockDream in the launcher's language (locale); a TextClock would follow the
+             TV's language, which Android puts back when the screensaver starts. -->
+        <TextView
+            android:id="@+id/dreamDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="4dp"
-            android:format12Hour="@string/date_format"
-            android:format24Hour="@string/date_format"
             android:textColor="#8CFFFFFF"
             android:textSize="18sp"
             android:fontFamily="@string/font_regular"
