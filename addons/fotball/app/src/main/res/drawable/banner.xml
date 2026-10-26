@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="320dp" android:height="180dp" android:viewportWidth="320" android:viewportHeight="180">
+    <!-- A pitch with a ball. Put your own club's picture in res/drawable-nodpi/banner.png (and delete this file)
+         for a card in its colours; club badges are trademarks, so keep that picture out of a public repository. -->
+    <path android:fillColor="#1E7A3C" android:pathData="M0,0h320v180h-320z" />
+    <path android:fillColor="#23893F" android:pathData="M0,0h40v180h-40z M80,0h40v180h-40z M160,0h40v180h-40z M240,0h40v180h-40z" />
+    <path android:strokeColor="#CCFFFFFF" android:strokeWidth="3" android:pathData="M160,0v180 M12,12h296v156h-296z" />
+    <path android:strokeColor="#CCFFFFFF" android:strokeWidth="3" android:pathData="M160,62a28,28 0 1,0 0.1,0z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M232,104a22,22 0 1,0 0.1,0z" />
+    <path android:fillColor="#1A1A1A" android:pathData="M232,118 L241,124 L237,134 L227,134 L223,124z" />
+</vector>

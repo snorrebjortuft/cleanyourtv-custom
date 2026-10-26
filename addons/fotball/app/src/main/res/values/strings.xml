@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Fotball stats</string>
+    <string name="next">Neste kamp</string>
+    <string name="recent">Siste kamper</string>
+    <string name="table">Tabell</string>
+    <string name="place">%1$d. plass · %2$d poeng · %3$d kamper</string>
+    <string name="loading">Henter…</string>
+    <string name="offline">Får ikke kontakt. Viser sist lagrede data.</string>
+    <string name="failed">Får ikke kontakt med NIFS. Sjekk nettet og prøv igjen.</string>
+    <string name="no_next">Ingen kamp satt opp.</string>
+    <string name="more">Trykk OK for hele tabellen og alle kamper</string>
+    <string name="updated">Oppdatert %1$s · Data: NIFS</string>
+    <string name="live">LIVE</string>
+</resources>
