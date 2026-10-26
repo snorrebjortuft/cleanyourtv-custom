@@ -1,0 +1,8 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="320dp" android:height="180dp" android:viewportWidth="320" android:viewportHeight="180">
+    <!-- Two controller halves. Put your own picture in res/drawable-nodpi/banner.png (and delete this file) for a card
+         with your favourite character; keep copyrighted artwork out of a public repository. -->
+    <path android:fillColor="#1C2433" android:pathData="M0,0h320v180h-320z" />
+    <path android:fillColor="#E60012" android:pathData="M118,40 h30 v100 h-30 a26,26 0 0,1 -26,-26 v-48 a26,26 0 0,1 26,-26z" />
+    <path android:fillColor="#00A8E0" android:pathData="M172,40 h30 a26,26 0 0,1 26,26 v48 a26,26 0 0,1 -26,26 h-30z" />
+    <path android:fillColor="#1C2433" android:pathData="M120,74 a10,10 0 1,0 0.1,0z M200,100 a10,10 0 1,0 0.1,0z" />
+</vector>
