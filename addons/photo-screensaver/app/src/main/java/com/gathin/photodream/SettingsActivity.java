@@ -71,6 +71,12 @@ public class SettingsActivity extends Activity {
         lp.topMargin = dp(24);
         list.addView(preview, lp);
 
+        Button upload = new Button(this);
+        upload.setText(R.string.upload_open);
+        upload.setOnClickListener(v -> startActivity(new Intent(this, UploadActivity.class)));
+        list.addView(upload, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
         ScrollView scroll = new ScrollView(this);
         scroll.addView(list);
         setContentView(scroll);

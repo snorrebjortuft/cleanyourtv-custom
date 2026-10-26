@@ -17,4 +17,11 @@
     <string name="weather_ok">Location is on. The weather is updated every 30 minutes.</string>
     <string name="open_location_settings">Open location settings</string>
     <string name="preview">Preview</string>
+    <string name="upload_open">Send bilder fra mobilen</string>
+    <string name="upload_title">Send bilder fra mobilen</string>
+    <string name="upload_how">Skann koden med mobilkameraet (samme Wi-Fi som TV-en), trykk «Velg bilder» og velg bildene. De havner rett i skjermspareren.</string>
+    <string name="upload_waiting">Venter på bilder … Lukk denne skjermen når du er ferdig.</string>
+    <string name="upload_received">%1$d bilder mottatt.</string>
+    <string name="upload_locked">Stoppet etter for mange feil forsøk fra nettverket. Åpne skjermen på nytt for en ny kode.</string>
+    <string name="upload_no_network">TV-en er ikke på nettet, så mobilen kan ikke nå den.</string>
 </resources>

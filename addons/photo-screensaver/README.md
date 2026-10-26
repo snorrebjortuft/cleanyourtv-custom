@@ -67,6 +67,17 @@ first run is remembered for `--off`; `build-and-install.sh --uninstall` does `--
 `IDLE_MINUTES` sets `screen_off_timeout`, after which the TV starts its screensaver. You can also pick
 Photos yourself in the TV's screensaver settings.
 
+### From a phone, without a computer
+
+Settings (hold OK on the card) > **Send bilder fra mobilen** shows a QR code. Scan it with a phone on the same
+network, pick photos, and they land in the slideshow. The page turns each photo into a JPEG of at most 3840 px on
+the phone first, so iPhone HEIC photos work and stay under the 10 MB limit.
+
+A small web server (`UploadServer`) runs only while that screen is open and stops when it closes. The link
+carries a fresh random 10-character code each time; any request without it gets 404, and after five such requests
+the server shuts itself down and the screen says so. Only picture names the slideshow accepts are written, through
+a hidden temporary file, at most 10 MB each and 100 files in all (`UploadServerTest`).
+
 ## Memory
 
 At most two screen-sized pictures are held, as GPU bitmaps, and one hardware video player. A 4K picture
@@ -79,6 +90,7 @@ is decoded at screen size. On a TCL 43P69K (1.5 GB) a 1080p clip played with the
   default. With it on, the TV's rough location, rounded to two decimals (about 1 km), goes to
   `api.open-meteo.com` every 30 minutes while the screensaver runs, and the temperature and weather code
   come back, with whether it is day. Nothing else goes out; with the weather off, the app makes no network connection at all.
+  `INTERNET` also lets the phone-upload screen listen on the home network, only while that screen is open.
 - No storage permission and no background service: the pictures stay on the TV in the app's own folder
   (`Android/data/com.gathin.photodream/files/pictures`), removed with the app.
 - **`SlideshowActivity`** (exported) is the module card; **`SettingsActivity`** (exported) is opened by the

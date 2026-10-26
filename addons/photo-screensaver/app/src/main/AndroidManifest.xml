@@ -48,6 +48,9 @@
         </activity>
 
         <!-- Opened by the TV's screensaver settings (xml/dream.xml), which needs it exported. -->
+        <activity android:name=".UploadActivity" android:exported="false"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen" />
+
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
