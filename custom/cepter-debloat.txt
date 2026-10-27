@@ -1,0 +1,30 @@
+# Cepter "4K PA Google TV" (HKC, device lakeside, MediaTek m7332, CVTE-family board), Android TV OS 11,
+# firmware RTM8.240401.077. Everything below was DISABLED for user 0 on 26 October 2026, never uninstalled.
+#
+# Undo everything (turn USB debugging on again first, accept the prompt on the TV):
+#   tools\restore.ps1 -TvHost <tv ip> custom\cepter-debloat.txt -Stock com.google.android.apps.tv.launcherx
+# Re-enable one app only:
+#   $env:TV_HOST='<tv ip>'; tools\venv\Scripts\python.exe tools\tv.py "pm enable com.google.android.youtube.tvmusic"
+
+# Batch 1: maker retail/help/disclaimer, Google telemetry and partner plumbing
+fusion.android.tv.demo2                          # HKC retail demo (polytron), boot receiver
+com.hkc.tv.hkc_help                              # HKC help app
+com.mstar.android.tv.disclaimercustomization     # store disclaimer screen
+com.google.android.feedback                      # Google usage feedback
+android.autoinstalls.config.google.gtvpai        # partner auto-install stub
+com.google.android.partnersetup                  # partner attribution (RLZ)
+com.google.android.apps.nbu.smartconnect.tv      # Google data-saver VPN
+
+# Batch 2: partner rows, preloads, apps not used
+com.mediatek.android.leanbacklauncher.partnercustomizer  # partner rows on the stock home
+com.google.android.play.games                    # preloaded
+com.google.android.youtube.tvmusic               # YouTube Music
+com.google.android.videos                        # Google TV movie shop
+com.google.android.apps.tv.dreamx                # Ambient screensaver
+com.google.android.apps.mediashell               # Chromecast
+
+# Batch 3: Google TV home handover (Wi-Fi was forgotten and re-joined first, now owned by TV Settings)
+com.google.android.tungsten.setupwraith
+
+# Disabled by launcher/build-and-install.ps1 once the new launcher was Home:
+# com.google.android.apps.tv.launcherx

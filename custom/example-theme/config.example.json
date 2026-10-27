@@ -1,0 +1,32 @@
+{
+  "dock_apps": [
+    "com.google.android.youtube.tv",
+    "com.netflix.ninja",
+    "com.disney.disneyplus",
+    "com.amazon.amazonvideo.livingroom"
+  ],
+  "columns": 7,
+  "wallpaper": true,
+  "wallpaper_rotation_minutes": 60,
+  "wallpaper_moods": {
+    "morning": ["001.jpg", "002.jpg", "003.jpg"],
+    "evening": ["004.jpg", "005.jpg", "006.jpg"],
+    "night": ["007.jpg", "008.jpg", "009.jpg", "010.jpg"]
+  },
+  "wallpaper_seasons": {
+    "12-01..12-31": ["xmas-01.jpg", "xmas-02.jpg", "xmas-03.jpg"],
+    "05-17": ["flag-01.jpg", "flag-02.jpg"]
+  },
+  "wallpaper_dim": 25,
+  "dock_opacity": 70,
+  "clock_wallpaper": true,
+  "ambient_glow": false,
+  "app_glow": false,
+  "greeting_name": "Your Name",
+  "countdown_date": "12-24",
+  "countdown_label": "julaften🎄",
+  "countdown_party": "🎉 God jul! 🎉",
+  "locale": "nb",
+  "now_playing": true,
+  "tile_menu": true
+}
