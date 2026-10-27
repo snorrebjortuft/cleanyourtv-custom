@@ -1,3 +1,86 @@
+# cleanyourtv-custom
+
+A personal fork of **[CleanYourTV](https://github.com/Gathin23/cleanyourtv)** (MIT), the open-source project that
+strips the bloatware from Android TV and Google TV sets and replaces the ad-filled home screen with a clean,
+Apple TV-style launcher. On top of it I built a set of features and add-on apps for my own TV, a Cepter 4K PA
+Google TV (Android TV 11), and tested every one of them on the real set.
+
+![Home with the now-playing card](custom/screenshots/home.jpg)
+
+## What I added
+
+| Feature | What it does | Where |
+|---|---|---|
+| **Now playing** | A card on Home with the cover, title, artist and progress of whatever plays (Spotify, YouTube Music, podcasts). Selectable with the remote; OK opens the app | [launcher](launcher/app/src/main/java/com/gathin/tvhome/NowPlayingCard.java) |
+| **Music screensaver** | While music plays, the screensaver shows the time and date beside the song card over Home's wallpaper | [MusicScene](launcher/app/src/main/java/com/gathin/tvhome/MusicScene.java) |
+| **Countdown and party** | Days to a yearly date under the clock; on the day, confetti, rising hearts and a message animated on a Canvas | [PartyView](launcher/app/src/main/java/com/gathin/tvhome/PartyView.java) |
+| **Seasonal wallpapers** | Date ranges (all of December, 17 May) whose pictures take over the wallpaper rotation | [WallpaperSeason](launcher/app/src/main/java/com/gathin/tvhome/WallpaperSeason.java) |
+| **Fotball stats** | A card for three teams' seasons (Arsenal, Bodø/Glimt, Odd): next match, results, league tables, from a public football API | [addons/fotball](addons/fotball/) |
+| **TV-statistikk** | CPU, memory, storage, uptime, watch time per app, and the most watched shows | [addons/tv-stats](addons/tv-stats/) |
+| **Nintendo Switch 2** | One press to the HDMI input the console sits on, found by its HDMI-CEC name | [addons/switch](addons/switch/) |
+| **Photos from a phone** | A QR code on the TV opens an upload page on the phone; pictures go straight into the photo screensaver | [addons/photo-screensaver](addons/photo-screensaver/) |
+| **Debloat list** | The packages disabled on this TV model, every one reversible | [custom/cepter-debloat.txt](custom/cepter-debloat.txt) |
+
+| | |
+|---|---|
+| ![The music screensaver](custom/screenshots/screensaver-music.jpg) | ![The football card](custom/screenshots/fotball.jpg) |
+| *Music screensaver: time and date beside the song* | *Fotball stats: three teams, one screen* |
+| ![The birthday party on Home](custom/screenshots/party.jpg) | ![The add-on cards on Home](custom/screenshots/cards.jpg) |
+| *Countdown day: confetti, hearts and a message* | *The add-ons as cards on Home* |
+
+## How it works
+
+- **Android platform APIs, no extra libraries in the launcher:** media sessions read through a
+  `NotificationListenerService` (`MediaSessionManager`, `MediaController`), `UsageStatsManager` usage events for
+  watch time, `TvInputManager` and `TvContract` for HDMI inputs, a `DreamService` for the screensaver.
+- **Built for a 1.7 GB TV:** animations are drawn on a `Canvas` without allocating per frame, progress updates run
+  only while Home is on screen, and the launcher still has no `INTERNET` permission.
+- **Network code kept apart:** only the football add-on goes online (a keyless public API, fetched while its
+  screen is open, cached for offline use). Everything else stays on the TV.
+- **Configuration over code:** each launcher feature is an off-by-default key in a theme's `config.json`, the
+  project's own convention, so nothing changes for other users of the launcher.
+- **Tested:** JVM unit tests for the date logic, the seasonal rotation, the watch log, the football results and the
+  upload server, and the project's own Python suite (1,700+ tests) passes for everything this fork touches. Every
+  feature was verified on the TV with screenshots and remote key presses.
+
+## Security and privacy
+
+- **Phone upload:** the server listens only while its screen is open, behind a random 10-character code in the QR
+  link. It stops itself after five wrong requests and writes only accepted picture names through a temporary file,
+  with size and count limits. Tests cover the code check, the lock-out and a path that tries to leave the folder.
+- **Least privilege:** each add-on asks only for what it uses: usage stats and a notification listener (granted over
+  ADB) for the stats card, `INTERNET` for the football card, none for the Switch card.
+- **Nothing personal in this repository:** no IP addresses, device identifiers, ADB keys or backups. Personal
+  themes live outside it (see [custom/example-theme](custom/example-theme/)), and screenshots are blurred.
+- **ADB is switched off after every session** and checked closed, as the original project's procedure requires.
+
+## Use it
+
+Clone this repository and follow the original project's [PROMPT.md](PROMPT.md) to debloat a TV and install the
+launcher. Then, with USB debugging on:
+
+```powershell
+custom\push-all.ps1 -TvHost <tv ip> -Theme <your theme folder>
+```
+
+Each add-on also builds on its own (`./gradlew assembleRelease` in its folder; JDK 17, Android SDK 34).
+
+## Branches and credits
+
+- **`main`**: this fork, the original project plus my commits on top.
+- **`upstream`**: the original project, untouched, at the commit this fork started from.
+
+The launcher, the tools, the photo screensaver and everything else not listed above are the work of
+[Gathin](https://github.com/Gathin23) and the [CleanYourTV contributors](https://github.com/Gathin23/cleanyourtv/graphs/contributors),
+under the [MIT licence](LICENSE). Football data from [NIFS](https://api.nifs.no). This fork was built in
+pair-programming sessions with Claude Code (Anthropic).
+
+---
+
+*The original CleanYourTV README follows.*
+
+---
+
 <p align="center">
   <a href="https://cleanyour.tv"><img src="https://raw.githubusercontent.com/Gathin23/cleanyourtv/main/docs/banner.png" alt="CleanYourTV. Your TV, minus the ads. Strip the bloatware from any Android TV or Google TV over Wi-Fi and replace the ad-filled home screen with a clean launcher that looks like an Apple TV. No root, no cable, nothing uninstalled, and a one-line restore." width="800"></a>
 </p>
