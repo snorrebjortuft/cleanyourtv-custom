@@ -14,7 +14,9 @@ others. The current season is found by itself each year (`Nifs.currentStage`).
 three tries per team; each answer is cached on the TV so the screen still shows the last data offline. League
 matches only, no cups or European games.
 
-Permissions: `INTERNET`, used for NIFS only.
+## Permissions
+
+`INTERNET`, used for NIFS only. Nothing about the TV or its owner is sent.
 
 ## Build
 

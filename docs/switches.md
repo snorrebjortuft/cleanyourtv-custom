@@ -26,6 +26,11 @@ fits the rules; keys from before the rule sit on its wanted list until a screens
 |---|---|
 | `columns` | <img src="../themes/six-columns/screenshot.jpg" width="320" alt="columns on a TV"> |
 | `glass_style` | <img src="switches/glass_style.jpg" width="320" alt="glass_style halo on a TV"> |
+| `countdown_date` | <img src="switches/countdown_date.jpg" width="320" alt="countdown_date on a TV: the days left under the clock"> |
+| `countdown_label` | <img src="switches/countdown_date.jpg" width="320" alt="countdown_label on a TV"> |
+| `countdown_party` | <img src="switches/countdown_party.jpg" width="320" alt="countdown_party on a TV: confetti, hearts and the message"> |
+| `now_playing` | <img src="switches/now_playing.jpg" width="320" alt="now_playing in the screensaver: time and date beside the song card"> |
+| `wallpaper_seasons` | <img src="switches/wallpaper_seasons.jpg" width="320" alt="wallpaper_seasons on a TV: a December picture"> |
 | `sky_intensity` | <img src="sky-sunset.jpg" width="320" alt="sky_intensity on a TV"> |
 | `wallpaper_rotation_minutes` | <img src="../themes/scenes/screenshot.jpg" width="320" alt="wallpaper_rotation_minutes on a TV"> |
 | `festival` | <img src="../themes/dussehra/screenshot.jpg" width="320" alt="festival on a TV"> |

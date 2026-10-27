@@ -9,9 +9,9 @@ A module card for the launcher that shows how the TV is doing and what it is use
 - **Mest sett (most watched):** the shows, channels and artists that played the longest, counted from media sessions
   by a notification listener while they play and kept on the TV for 60 days (`WatchLog`).
 
-Nothing leaves the TV: no `INTERNET` permission.
+## Permissions
 
-## Access, granted once over ADB
+No `INTERNET`: nothing leaves the TV. Two accesses are granted once over ADB:
 
 ```bash
 adb shell appops set no.kongsnorre.tvstats GET_USAGE_STATS allow

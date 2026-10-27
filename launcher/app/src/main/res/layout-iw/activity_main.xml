@@ -326,6 +326,25 @@
                 android:focusable="false"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/leftBlock"
+                android:layout_alignEnd="@id/leftBlock"
+                android:layout_marginTop="6dp"
+                android:gravity="right"
+                android:textDirection="rtl"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="#E6FFFFFF"
+                android:textSize="17sp"
+                android:fontFamily="@string/font_medium"
+                android:letterSpacing="0.14"
+                android:textAllCaps="true"
+                android:focusable="false"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/topButtons"
                 android:layout_width="wrap_content"

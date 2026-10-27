@@ -5,7 +5,11 @@ app (`TvContract.buildChannelUriForPassthroughInput`), the way the launcher's In
 
 It picks the input in this order: the one remembered from last time; the one whose HDMI-CEC name or custom label
 says "Switch" or "Nintendo"; else it asks once with a list of the HDMI inputs and remembers the answer (clear the
-app's data to choose again). No permissions.
+app's data to choose again).
+
+## Permissions
+
+None. It reads the TV's input list through `TvInputManager`, which needs no permission.
 
 ## Build
 

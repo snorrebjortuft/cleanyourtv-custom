@@ -146,4 +146,9 @@
     <string name="race_countdown_hours">%1$d שע׳ %2$d דק׳</string>
     <string name="race_countdown_days">%1$d ימ׳ %2$d שע׳</string>
     <string name="last_opened">פתיחה אחרונה: %1$s</string>
+    <string name="countdown_days">%1$d ימים עד %2$s</string>
+    <string name="countdown_one_day">יום אחד עד %1$s</string>
+    <string name="countdown_today">היום: %1$s</string>
+    <string name="now_playing">מתנגן עכשיו</string>
+    <string name="now_paused">מושהה</string>
 </resources>
