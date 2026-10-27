@@ -25,7 +25,7 @@ Google TV (Android TV 11), and tested every one of them on the real set.
 |---|---|
 | ![The music screensaver](custom/screenshots/screensaver-music.jpg) | ![The football card](custom/screenshots/fotball.jpg) |
 | *Music screensaver: time and date beside the song* | *Fotball stats: three teams, one screen* |
-| ![The birthday party on Home](custom/screenshots/party.jpg) | ![The add-on cards on Home](custom/screenshots/cards.jpg) |
+| ![The birthday party on Home](custom/screenshots/party-day.jpg) | ![The add-on cards on Home](custom/screenshots/cards.jpg) |
 | *Countdown day: confetti, hearts and a message* | *The add-ons as cards on Home* |
 
 ## How it works
